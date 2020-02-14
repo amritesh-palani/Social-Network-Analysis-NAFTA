@@ -26,8 +26,9 @@ release1971_2016<-release1948_2016[release1948_2016$year>=1971, ]
 #only trade relation of the three countries with the rest of the world
 CA_US_MX_1971_2016<-release1971_2016[release1971_2016$country_o %in% c("Canada", "United States","Mexico"), ]
 
+nrow(release1971_2016)
+total_na<-release1971_2016 %>%summarise_all(funs(sum(is.na(.))))
 
-
-
-
+total_na<-transpose(total_na)
+total_na<-do.call(rbind,total_na)
 
