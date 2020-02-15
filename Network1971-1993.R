@@ -45,3 +45,12 @@ edge_list <- tibble(from = release71_93_peryear$`1971`$country_o, to = release71
 node_list <- tibble(id = (release71_93_peryear$`1971`$country_o))
 
 
+####Countries that have trade agreements
+str(release1971_2016) #starting from full dataset
+which( colnames(release1971_2016)=="agree_pta_goods")
+which( colnames(release1971_2016)=="agree_fta")
+release1971_2016$tradeagreement<-sum(release1971_2016[,41:45])>0   
+#the above T/F if countries have any trade agreement
+
+
+
