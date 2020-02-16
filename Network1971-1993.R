@@ -3,6 +3,7 @@ library(igraphdata)
 library(visNetwork)
 library(dplyr)
 library(ggplot)
+library(tidyverse)
 
 #Creating Edges and nodes 1971-1993... directed graph    
 #(working with one year for similicity)
@@ -49,8 +50,37 @@ node_list <- tibble(id = (release71_93_peryear$`1971`$country_o))
 str(release1971_2016) #starting from full dataset
 which( colnames(release1971_2016)=="agree_pta_goods")
 which( colnames(release1971_2016)=="agree_fta")
-release1971_2016$tradeagreement<-sum(release1971_2016[,41:45])>0   
+
+
+release1971_2016$total_trade_agreement <-(release1971_2016$agree_pta_goods+
+                                                release1971_2016$agree_pta_services+release1971_2016$agree_cu+
+                                                release1971_2016$agree_eia+release1971_2016$agree_fta
+                                              +release1971_2016$agree_psa)
+release1971_2016$total_trade_agreement
+#the above sum of the total trade agreement they have with eachother
+#using this to create edges
+
+release1971_2016$any_trade_agreement<-release1971_2016$total_trade_agreement>0
 #the above T/F if countries have any trade agreement
+#using this to weight edges
+release1971_2016$any_trade_agreement
+
+#subsetting on countries that have any agreements with eachother
+release1971_2016_agree<-release1971_2016[release1971_2016$any_trade_agreement==TRUE,]
+release1971_2016_agree$any_trade_agreement
+release_peryear<-split(release1971_2016_agree,release1971_2016_agree$year)
+
+#MAPPING undirected graph for those with agreements
+edge_agr <- tibble(from = release_peryear$`1971`$country_o, to = release_peryear$`1971`$country_d)
+node_agr <- tibble(id = (release_peryear$`1971`$country_o))
+agr_g<-graph.data.frame(edge_list,directed = F)
+agr_g
+E(agr_g)  #40000 edges for 1971, needs to be weigthed by edge attribute and filtered
+V(agr_g)
+plot(agr_g)
+plot(simplify(agr_g))
+
+
 
 
 

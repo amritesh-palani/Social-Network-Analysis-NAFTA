@@ -21,7 +21,6 @@ release1948_2016<-do.call("rbind", list(release1948_1977,release1978_1992,releas
 #Dataset for 22 years before and 22 after NAFTA came into effect in 1994####
 release1971_2016<-release1948_2016[release1948_2016$year>=1971, ]
 
-
 #NAs
 total_na<-transpose(total_na)
 total_na<-do.call(rbind,total_na)
@@ -39,3 +38,7 @@ CA_US_MX_1971_2016<-release1971_2016[release1971_2016$country_o %in% c("Canada",
 
 nrow(release1971_2016)
 total_na<-release1971_2016 %>%summarise_all(funs(sum(is.na(.))))
+
+
+
+
