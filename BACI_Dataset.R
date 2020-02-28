@@ -2,7 +2,7 @@ library(tidyverse)
 library(plyr)
 library(ff)
 
-country_code<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_code/country_codes_BACI.csv",sep = ";")
+country_code<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/country_codes_BACI.csv",sep = ";")
 product_category<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_code/hs92_6d.csv",sep = ";")
 
 #Load Data for 1995 ####
@@ -75,7 +75,7 @@ head(country_code)
 head(product_category)
 
 ##########################1.  Loading 1995 to 1999 Files####
-setwd("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_HS92/BACI_HS92_1995-1999/")
+setwd("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_HS92_1995-1999/")
 getwd()
 
 files95_99 = list.files(pattern="*.csv")
@@ -122,7 +122,7 @@ str(BACI95_99)
 
 # Aggregate the Product Category###
 detach(package:plyr)
-BACI95_99_agg<-BACI95_99%>%group_by(Year,Exporter,Importer)%>%summarise(VoT=mean(VoT),Quantity=mean(Quantity))
+BACI95_99_agg<-BACI95_99%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT),Quantity=mean(Quantity))
 head(BACI95_99_agg)
 str(BACI95_99_agg)
 write.csv(BACI95_99_agg, file = "BACI95_99_agg.csv") 

@@ -113,3 +113,4 @@ gravity2015_2017_agg<-gravity2015_2017%>%group_by(gravity2015_2017$iso3_o,gravit
 str(gravity2015_2017_agg)
 
 write.csv(gravity2015_2017_agg, file = "gravity2015_2017_agg.csv") 
+
