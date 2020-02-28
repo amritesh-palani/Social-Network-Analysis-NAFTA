@@ -81,6 +81,7 @@ setwd("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_HS92_1995-1
 getwd()
 
 files95_99 = list.files(pattern="*.csv")
+
 library(data.table)
 BACI95_99 = do.call(rbind, lapply(files95_99, fread))
 str(BACI95_99)
@@ -127,6 +128,10 @@ detach(package:plyr)
 BACI95_99_agg<-BACI95_99%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT),Quantity=mean(Quantity))
 head(BACI95_99_agg)
 str(BACI95_99_agg)
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) 
+getwd()
+
 write.csv(BACI95_99_agg, file = "../Output/BACI/BACI95_99_agg.csv") 
 
 
@@ -183,6 +188,9 @@ BACI00_04_agg<-BACI00_04%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT)
 head(BACI00_04_agg)
 str(BACI00_04_agg)
 
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) 
+getwd()
+
 write.csv(BACI00_04_agg, file = "../Output/BACI/BACI00_04_agg.csv") 
 
 
@@ -236,6 +244,9 @@ detach(package:plyr)
 BACI05_09_agg<-BACI05_09%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT),Quantity=mean(Quantity))
 head(BACI05_09_agg)
 str(BACI05_09_agg)
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) 
+getwd()
 
 write.csv(BACI05_09_agg, file = "../Output/BACI/BACI05_09_agg.csv") 
 
