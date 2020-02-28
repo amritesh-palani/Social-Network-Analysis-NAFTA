@@ -30,6 +30,10 @@ BACI_Grav_95_99$X.y<- NULL
 BACI_Grav_95_99$Trade_to_GDP_ratio_o <- with(BACI_Grav_95_99, BACI_Grav_95_99$VoT/BACI_Grav_95_99$gdp_wdi_const_o)
 BACI_Grav_95_99$Trade_to_GDP_ratio_d <- with(BACI_Grav_95_99, BACI_Grav_95_99$VoT/BACI_Grav_95_99$gdp_wdi_const_d)
 
+#Trade value proportion per total of trade value for exporter ##
+
+BACI_Grav_95_99<-BACI_Grav_95_99%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+
 
 write.csv(BACI_Grav_95_99, file = "../Output/Combined/BACI_Grav_95_99.csv")
 
@@ -43,6 +47,9 @@ BACI_Grav_00_04$X.y<- NULL
 BACI_Grav_00_04$Trade_to_GDP_ratio_o <- with(BACI_Grav_00_04, BACI_Grav_00_04$VoT/BACI_Grav_00_04$gdp_wdi_const_o)
 BACI_Grav_00_04$Trade_to_GDP_ratio_d <- with(BACI_Grav_00_04, BACI_Grav_00_04$VoT/BACI_Grav_00_04$gdp_wdi_const_d)
 
+#Trade value proportion per total of trade value for exporter ##
+BACI_Grav_00_04<-BACI_Grav_00_04%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+
 write.csv(BACI_Grav_00_04, file = "../Output/Combined/BACI_Grav_00_04.csv")
 
 #2005 to 2009####
@@ -54,6 +61,10 @@ BACI_Grav_05_09$X.y<- NULL
 
 BACI_Grav_05_09$Trade_to_GDP_ratio_o <- with(BACI_Grav_05_09, BACI_Grav_05_09$VoT/BACI_Grav_05_09$gdp_wdi_const_o)
 BACI_Grav_05_09$Trade_to_GDP_ratio_d <- with(BACI_Grav_05_09, BACI_Grav_05_09$VoT/BACI_Grav_05_09$gdp_wdi_const_d)
+
+
+#Trade value proportion per total of trade value for exporter ##
+BACI_Grav_05_09<-BACI_Grav_05_09%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
 
 write.csv(BACI_Grav_05_09, file = "../Output/Combined/BACI_Grav_05_09.csv")
 
@@ -68,6 +79,9 @@ BACI_Grav_10_14$X.y<- NULL
 BACI_Grav_10_14$Trade_to_GDP_ratio_o <- with(BACI_Grav_10_14, BACI_Grav_10_14$VoT/BACI_Grav_10_14$gdp_wdi_const_o)
 BACI_Grav_10_14$Trade_to_GDP_ratio_d <- with(BACI_Grav_10_14, BACI_Grav_10_14$VoT/BACI_Grav_10_14$gdp_wdi_const_d)
 
+#Trade value proportion per total of trade value for exporter ##
+BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+
 write.csv(BACI_Grav_10_14, file = "../Output/Combined/BACI_Grav_10_14.csv")
 
 
@@ -80,6 +94,9 @@ BACI_Grav_15_17$X.y<- NULL
 
 BACI_Grav_15_17$Trade_to_GDP_ratio_o <- with(BACI_Grav_15_17, BACI_Grav_15_17$VoT/BACI_Grav_15_17$gdp_wdi_const_o)
 BACI_Grav_15_17$Trade_to_GDP_ratio_d <- with(BACI_Grav_15_17, BACI_Grav_15_17$VoT/BACI_Grav_15_17$gdp_wdi_const_d)
+
+#Trade value proportion per total of trade value for exporter ##
+BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
 
 write.csv(BACI_Grav_15_17, file = "../Output/Combined/BACI_Grav_15_17.csv")
 
