@@ -1,22 +1,29 @@
+install.packages('gsheet')
+
 library(tidyverse)
 library(plyr)
 library(ff)
+library(gsheet)
 
-country_code<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/country_codes_BACI.csv",sep = ";")
-product_category<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_code/hs92_6d.csv",sep = ";")
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) 
+getwd()
+
+country_code <- read.csv("./Input/country_codes_BACI.csv",sep = ";")
+product_category <- read.csv("./Input/hs92_6d.csv",sep = ";")
+
 
 #Load Data for 1995 ####
-BACI1995<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_HS92/BACI_HS92_1995.csv",sep = ";")
+BACI1995 <- read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_HS92/BACI_HS92_1995.csv",sep = ";")
 colnames(BACI1995)
 str(BACI1995)
 
 # Rename Columns###
-names(BACI1995)[names(BACI1995)=="t"]<-"Year"
-names(BACI1995)[names(BACI1995)=="k"]<-"Product Category"
-names(BACI1995)[names(BACI1995)=="i"]<-"Exporter"
-names(BACI1995)[names(BACI1995)=="j"]<-"Importer"
-names(BACI1995)[names(BACI1995)=="v"]<-"VoT"
-names(BACI1995)[names(BACI1995)=="q"]<-"Quantity"
+names(BACI1995)[names(BACI1995)=="t"] <- "Year"
+names(BACI1995)[names(BACI1995)=="k"] <- "Product Category"
+names(BACI1995)[names(BACI1995)=="i"] <- "Exporter"
+names(BACI1995)[names(BACI1995)=="j"] <- "Importer"
+names(BACI1995)[names(BACI1995)=="v"] <- "VoT"
+names(BACI1995)[names(BACI1995)=="q"] <- "Quantity"
 
 # Update Datatype###
 str(BACI1995)
@@ -47,6 +54,12 @@ str(BACI1995_agg)
 
 
 # Add Gravity Dataset ###
+url <- 'https://drive.google.com/file/d/1HGBB-ygFYVKUkRIPCYs7FkqQQdQ_8-SK/view?usp=sharing'
+s <- gsheet2text(url, format='csv')
+c <- read.csv(text=s, stringsAsFactors=FALSE)
+head(c)
+
+
 release1993_2004<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
 release1993_2004_list<-split(release1993_2004,release1993_2004$year)
 release1995<-release1993_2004_list$`1995`
