@@ -47,7 +47,7 @@ head(BACI1995_agg)
 str(BACI1995_agg)
 
 
-release1993_2004<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
+release1993_2004 <- read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
 release1993_2004_list<-split(release1993_2004,release1993_2004$year)
 release1995<-release1993_2004_list$`1995`
 

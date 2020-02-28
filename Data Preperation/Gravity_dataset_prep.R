@@ -9,10 +9,10 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 #Load all trade dataset####
 #from https://www.usitc.gov/data/gravity/dataset.htm
-gravity1993_2004<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
-gravity2005_2016<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_2005_2016.csv")
+gravity1993_2004 <- data.table::fread("https://www.usitc.gov/documents/gravity/release_1.0_1993_2004.csv")
+gravity2005_2016 <- data.table::fread("https://www.usitc.gov/documents/gravity/release_1.0_2005_2016.csv")
 colnames(gravity1993_2004)
-colnames(gravity1993_2004)==colnames(gravity1993_2004)
+colnames(gravity1993_2004) == colnames(gravity1993_2004)
 ncol(gravity1993_2004)
 
 
