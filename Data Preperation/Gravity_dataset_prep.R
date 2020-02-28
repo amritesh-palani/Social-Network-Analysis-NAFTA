@@ -56,7 +56,7 @@ gravity1995_1999_agg<-gravity1995_1999%>%group_by(gravity1995_1999$iso3_o,gravit
             agree_pta=max(agree_pta),polity_o=max(polity_o),polity_d=max(polity_d), common_language=max(common_language))
 str(gravity1995_1999_agg)
 
-write.csv(gravity1995_1999_agg, file = "gravity1995_1999_agg.csv") 
+write.csv(gravity1995_1999_agg, file = "../Output/Gravity/gravity1995_1999_agg.csv") 
 
 #Agregating 2000 to 2004####
 gravity2000_2004_agg<-gravity2000_2004%>%group_by(gravity2000_2004$iso3_o,gravity2000_2004$iso3_d)%>%
@@ -70,7 +70,7 @@ gravity2000_2004_agg<-gravity2000_2004%>%group_by(gravity2000_2004$iso3_o,gravit
             agree_pta=max(agree_pta),polity_o=max(polity_o),polity_d=max(polity_d), common_language=max(common_language))
 str(gravity2000_2004_agg)
 
-write.csv(gravity2000_2004_agg, file = "gravity2000_2004_agg.csv") 
+write.csv(gravity2000_2004_agg, file = "../Output/Gravity/gravity2000_2004_agg.csv") 
 
 #Agregating 2005 to 2009####
 gravity2005_2009_agg<-gravity2005_2009%>%group_by(gravity2005_2009$iso3_o,gravity2005_2009$iso3_d)%>%
@@ -84,7 +84,7 @@ gravity2005_2009_agg<-gravity2005_2009%>%group_by(gravity2005_2009$iso3_o,gravit
             agree_pta=max(agree_pta),polity_o=max(polity_o),polity_d=max(polity_d), common_language=max(common_language))
 str(gravity2005_2009_agg)
 
-write.csv(gravity2005_2009_agg, file = "gravity2005_2009_agg.csv") 
+write.csv(gravity2005_2009_agg, file = "../Output/Gravity/gravity2005_2009_agg.csv") 
 
 #Agregating 2010 to 2014####
 gravity2010_2014_agg<-gravity2010_2014%>%group_by(gravity2010_2014$iso3_o,gravity2010_2014$iso3_d)%>%
@@ -98,7 +98,7 @@ gravity2010_2014_agg<-gravity2010_2014%>%group_by(gravity2010_2014$iso3_o,gravit
             agree_pta=max(agree_pta),polity_o=max(polity_o),polity_d=max(polity_d), common_language=max(common_language))
 str(gravity2010_2014_agg)
 
-write.csv(gravity2010_2014_agg, file = "gravity2010_2014_agg.csv") 
+write.csv(gravity2010_2014_agg, file = "../Output/Gravity/gravity2010_2014_agg.csv") 
 
 #Agregating 2010 to 2014####
 gravity2015_2017_agg<-gravity2015_2017%>%group_by(gravity2015_2017$iso3_o,gravity2015_2017$iso3_d)%>%
@@ -112,5 +112,5 @@ gravity2015_2017_agg<-gravity2015_2017%>%group_by(gravity2015_2017$iso3_o,gravit
             agree_pta=max(agree_pta),polity_o=max(polity_o),polity_d=max(polity_d), common_language=max(common_language))
 str(gravity2015_2017_agg)
 
-write.csv(gravity2015_2017_agg, file = "gravity2015_2017_agg.csv") 
+write.csv(gravity2015_2017_agg, file = "../Output/Gravity/gravity2015_2017_agg.csv") 
 
