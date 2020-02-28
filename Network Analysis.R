@@ -9,8 +9,8 @@ library(tidyverse)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) 
 getwd()
 
-BACI_Grav_95_99<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_Grav_95_99.csv")
-library(tidyverse)
+BACI_Grav_95_99 <- read.csv("BACI_Grav_95_99.csv")
+
 edge_list <- tibble(from = BACI_Grav_95_99$Exporter, to = BACI_Grav_95_99$Importer)
 node_list <- tibble(id = (BACI_Grav_95_99$Exporter))
 
