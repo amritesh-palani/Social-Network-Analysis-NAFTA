@@ -16,7 +16,7 @@ node_list <- tibble(id = (BACI_Grav_95_99$Exporter))
 
 BACI_Grav_9599_Network<-graph.data.frame(edge_list,directed = F)
 BACI_Grav_9599_Network
-E(BACI_Grav_9599_Network)  
+E(BACI_Grav_9599_Network)
 V(BACI_Grav_9599_Network)
 
 plot(BACI_Grav_9599_Network)
