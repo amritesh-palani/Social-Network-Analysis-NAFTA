@@ -1,15 +1,9 @@
-install.packages('gsheet')
-
 library(tidyverse)
 library(plyr)
 library(ff)
-library(gsheet)
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) 
 getwd()
-
-country_code <- read.csv("./Input/country_codes_BACI.csv",sep = ";")
-product_category <- read.csv("./Input/hs92_6d.csv",sep = ";")
 
 
 #Load Data for 1995 ####
@@ -27,12 +21,12 @@ names(BACI1995)[names(BACI1995)=="q"] <- "Quantity"
 
 # Update Datatype###
 str(BACI1995)
-BACI1995$Year<-as.factor(BACI1995$Year)
-BACI1995$`Product Category`<-as.factor(BACI1995$`Product Category`)
-BACI1995$Exporter<-as.character(BACI1995$Exporter)
-BACI1995$Importer<-as.character(BACI1995$Importer)
-BACI1995$VoT<-as.numeric(BACI1995$VoT)
-BACI1995$Quantity<-as.numeric(BACI1995$Quantity)
+BACI1995$Year <- as.factor(BACI1995$Year)
+BACI1995$`Product Category` <- as.factor(BACI1995$`Product Category`)
+BACI1995$Exporter <- as.character(BACI1995$Exporter)
+BACI1995$Importer <- as.character(BACI1995$Importer)
+BACI1995$VoT <- as.numeric(BACI1995$VoT)
+BACI1995$Quantity <- as.numeric(BACI1995$Quantity)
 
 # Decode Country.Code for Importer and Exporter###
 
@@ -51,13 +45,6 @@ detach(package:plyr)
 BACI1995_agg<-BACI1995%>%group_by(Year,Exporter,Importer)%>%summarise(VoT=sum(VoT),Quantity=sum(Quantity))
 head(BACI1995_agg)
 str(BACI1995_agg)
-
-
-# Add Gravity Dataset ###
-url <- 'https://drive.google.com/file/d/1HGBB-ygFYVKUkRIPCYs7FkqQQdQ_8-SK/view?usp=sharing'
-s <- gsheet2text(url, format='csv')
-c <- read.csv(text=s, stringsAsFactors=FALSE)
-head(c)
 
 
 release1993_2004<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
@@ -79,11 +66,13 @@ BACI1995_agg<-merge(BACI1995_agg,
 head(BACI1995_agg)
 
 BACI1995_agg<-BACI1995_agg %>% mutate_if(is.factor, as.character)
-write.csv(BACI1995_agg, file = "BACI1995_agg.csv") 
+write.csv(BACI1995_agg, file = "../Output/BACI/BACI1995_agg.csv") 
+
+
 
 # Decode Country.Code for Importer and Exporter###
-country_code<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_code/country_codes_BACI.csv",sep = ";")
-product_category<-read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/BACI_code/hs92_6d.csv",sep = ";")
+country_code <- read.csv("../Input/country_codes_BACI.csv",sep = ";")
+product_category <- read.csv("../Input/hs92_6d.csv",sep = ";")
 head(country_code)
 head(product_category)
 
@@ -138,7 +127,7 @@ detach(package:plyr)
 BACI95_99_agg<-BACI95_99%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT),Quantity=mean(Quantity))
 head(BACI95_99_agg)
 str(BACI95_99_agg)
-write.csv(BACI95_99_agg, file = "BACI95_99_agg.csv") 
+write.csv(BACI95_99_agg, file = "../Output/BACI/BACI95_99_agg.csv") 
 
 
 
@@ -194,7 +183,7 @@ BACI00_04_agg<-BACI00_04%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT)
 head(BACI00_04_agg)
 str(BACI00_04_agg)
 
-write.csv(BACI00_04_agg, file = "BACI00_04_agg.csv") 
+write.csv(BACI00_04_agg, file = "../Output/BACI/BACI00_04_agg.csv") 
 
 
 ##########################3. Loading 2005 to 2009 Files####
@@ -248,7 +237,7 @@ BACI05_09_agg<-BACI05_09%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT)
 head(BACI05_09_agg)
 str(BACI05_09_agg)
 
-write.csv(BACI05_09_agg, file = "BACI05_09_agg.csv") 
+write.csv(BACI05_09_agg, file = "../Output/BACI/BACI05_09_agg.csv") 
 
 
 ##########################3. Loading 2010 to 2014 Files###
@@ -302,7 +291,7 @@ BACI10_14_agg<-BACI10_14%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT)
 head(BACI10_14_agg)
 str(BACI10_14_agg)
 
-write.csv(BACI10_14_agg, file = "BACI10_14_agg.csv") 
+write.csv(BACI10_14_agg, file = "../Output/BACI/BACI10_14_agg.csv") 
 
 
 ##########################4. Loading 2015 to 2017 Files####
@@ -356,7 +345,7 @@ BACI15_17_agg<-BACI15_17%>%group_by(Exporter,Importer)%>%summarise(VoT=mean(VoT)
 head(BACI15_17_agg)
 str(BACI15_17_agg)
 
-write.csv(BACI15_17_agg, file = "BACI15_17_agg.csv") 
+write.csv(BACI15_17_agg, file = "../Output/BACI/BACI15_17_agg.csv") 
 
 
 
