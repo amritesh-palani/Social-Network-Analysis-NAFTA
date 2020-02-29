@@ -99,7 +99,7 @@ str(gravity2010_2014_agg)
 
 write.csv(gravity2010_2014_agg, file = "../Output/Gravity/gravity2010_2014_agg.csv") 
 
-#Agregating 2010 to 2014####
+#Agregating 2015 to 2017####
 gravity2015_2017_agg<-gravity2015_2017%>%group_by(gravity2015_2017$iso3_o,gravity2015_2017$iso3_d)%>%
   summarise(landlocked_o=max(landlocked_o,na.rm=TRUE),landlocked_d=max(landlocked_d,na.rm=TRUE),
             island_o=max(island_o,na.rm=TRUE), island_d=max(island_d,na.rm=TRUE), 
