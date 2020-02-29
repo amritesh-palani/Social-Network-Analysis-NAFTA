@@ -18,8 +18,6 @@ BACI10_14_agg<-read.csv("../Output/BACI/BACI10_14_agg.csv")
 BACI15_17_agg<-read.csv("../Output/BACI/BACI15_17_agg.csv")
 
 
-
-
 #1995 to 1999####
 detach(package:plyr)
 BACI_Grav_95_99<-merge(x=BACI95_99_agg, y=gravity1995_1999_agg, by.x = c("Exporter","Importer"), 
