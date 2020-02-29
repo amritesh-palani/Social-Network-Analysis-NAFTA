@@ -29,9 +29,8 @@ BACI_Grav_95_99$X.x<- NULL  #this shows which row of x matched which row of Y
 BACI_Grav_95_99$X.y<- NULL
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_95_99<-BACI_Grav_95_99%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
-
-head(round(BACI_Grav_95_99$VoT_Proportion,2))
+BACI_Grav_95_99<-BACI_Grav_95_99%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
+BACI_Grav_95_99$VoT_Proportion
 
 
 write.csv(BACI_Grav_95_99, file = "../Output/Combined/BACI_Grav_95_99.csv")
@@ -45,8 +44,8 @@ BACI_Grav_00_04$X.y<- NULL
 
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_00_04<-BACI_Grav_00_04%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT,na.rm=TRUE))
-round(BACI_Grav_00_04$VoT_Proportion,2)
+BACI_Grav_00_04<-BACI_Grav_00_04%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
+head(BACI_Grav_00_04$VoT_Proportion)
 
 
 write.csv(BACI_Grav_00_04, file = "../Output/Combined/BACI_Grav_00_04.csv")
@@ -59,8 +58,8 @@ BACI_Grav_05_09$X.x<- NULL  #this shows which row of x matched which row of Y
 BACI_Grav_05_09$X.y<- NULL
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_05_09<-BACI_Grav_05_09%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
-head(round(BACI_Grav_05_09$VoT_Proportion,2))  
+BACI_Grav_05_09<-BACI_Grav_05_09%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
+head(BACI_Grav_05_09$VoT_Proportion)  
 
 write.csv(BACI_Grav_05_09, file = "../Output/Combined/BACI_Grav_05_09.csv")
 
@@ -74,8 +73,8 @@ BACI_Grav_10_14$X.y<- NULL
 
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
-
+BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
+head(BACI_Grav_10_14$VoT_Proportion)
 
 write.csv(BACI_Grav_10_14, file = "../Output/Combined/BACI_Grav_10_14.csv")
 
@@ -88,7 +87,8 @@ BACI_Grav_15_17$X.x<- NULL  #this shows which row of x matched which row of Y
 BACI_Grav_15_17$X.y<- NULL
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_15_17<-BACI_Grav_15_17%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+BACI_Grav_15_17<-BACI_Grav_15_17%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
+head(BACI_Grav_15_17$VoT_Proportion)
 
 write.csv(BACI_Grav_15_17, file = "../Output/Combined/BACI_Grav_15_17.csv")
 
