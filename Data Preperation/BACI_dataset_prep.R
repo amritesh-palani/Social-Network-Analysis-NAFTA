@@ -340,7 +340,7 @@ colnames(release1995)
 head(release1995$iso3_o)
 
 # Add Attributes from Gravity dataset ###
-BACI1995_agg<-merge(BACI1995_agg, 
+BACI_Grav_1995<-merge(BACI1995_agg, 
                     release1995[,names(release1995) %in% c("iso3_o", "region_o","gdp_wdi_cur_o",
                                                            "landlocked_o","island_o", "pop_o",
                                                            "iso3_d", "region_d","gdp_wdi_const_d","gdp_wdi_const_o","gdp_wdi_cap_const_o","gdp_wdi_cap_const_o",
@@ -348,13 +348,13 @@ BACI1995_agg<-merge(BACI1995_agg,
                                                            "contiguity", "agree_pta_goods","agree_pta_services",
                                                            "agree_cu","agree_eia","agree_fta","agree_psa","agree_pta","polity_o","polity_d")], 
                     by.x=c("Importer","Exporter"), by.y=c("iso3_o","iso3_d"))
-head(BACI1995_agg)
+head(BACI_Grav_1995)
 
 #Trade value proportion per total of trade value for exporter ##
-BACI1995_agg<-BACI1995_agg%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+BACI_Grav_1995<-BACI_Grav_1995%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
 
-BACI1995_agg<-BACI1995_agg %>% mutate_if(is.factor, as.character)
-write.csv(BACI1995_agg, file = "../Output/BACI/BACI1995_agg.csv") 
+BACI_Grav_1995<-BACI_Grav_1995 %>% mutate_if(is.factor, as.character)
+write.csv(BACI_Grav_1995, file = "../Output/BACI/BACI_Grav_1995.csv") 
 
 
 
@@ -414,7 +414,7 @@ colnames(release2016)
 head(release2016$iso3_o)
 
 # Add Attributes from Gravity dataset ###
-BACI2016_agg<-merge(BACI2016_agg, 
+BACI_Grav_2016<-merge(BACI2016_agg, 
                     release2016[,names(release2016) %in% c("iso3_o", "region_o","gdp_wdi_cur_o",
                                                            "landlocked_o","island_o", "pop_o",
                                                            "iso3_d", "region_d","gdp_wdi_const_d","gdp_wdi_const_o","gdp_wdi_cap_const_o","gdp_wdi_cap_const_o",
@@ -422,13 +422,13 @@ BACI2016_agg<-merge(BACI2016_agg,
                                                            "contiguity", "agree_pta_goods","agree_pta_services",
                                                            "agree_cu","agree_eia","agree_fta","agree_psa","agree_pta","polity_o","polity_d")], 
                     by.x=c("Importer","Exporter"), by.y=c("iso3_o","iso3_d"))
-head(BACI2016_agg)
+head(BACI_Grav_2016)
 
 #Trade value proportion per total of trade value for exporter ##
-BACI2016_agg<-BACI2016_agg%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+BACI_Grav_2016<-BACI_Grav_2016%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
 
-BACI2016_agg<-BACI2016_agg %>% mutate_if(is.factor, as.character)
-write.csv(BACI2016_agg, file = "../Output/BACI/BACI2016_agg.csv") 
+BACI_Grav_2016<-BACI_Grav_2016 %>% mutate_if(is.factor, as.character)
+write.csv(BACI_Grav_2016, file = "../Output/BACI/BACI_Grav_2016.csv") 
 
 
 
