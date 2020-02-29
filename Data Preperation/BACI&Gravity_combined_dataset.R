@@ -18,6 +18,8 @@ BACI10_14_agg<-read.csv("../Output/BACI/BACI10_14_agg.csv")
 BACI15_17_agg<-read.csv("../Output/BACI/BACI15_17_agg.csv")
 
 
+
+
 #1995 to 1999####
 detach(package:plyr)
 BACI_Grav_95_99<-merge(x=BACI95_99_agg, y=gravity1995_1999_agg, by.x = c("Exporter","Importer"), 
@@ -33,6 +35,9 @@ BACI_Grav_95_99$Trade_to_GDP_ratio_d <- with(BACI_Grav_95_99, BACI_Grav_95_99$Vo
 #Trade value proportion per total of trade value for exporter ##
 BACI_Grav_95_99<-BACI_Grav_95_99%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
 
+head(round(BACI_Grav_95_99$VoT_Proportion,2))
+
+
 write.csv(BACI_Grav_95_99, file = "../Output/Combined/BACI_Grav_95_99.csv")
 
 #2000 to 2004####
@@ -46,7 +51,9 @@ BACI_Grav_00_04$Trade_to_GDP_ratio_o <- with(BACI_Grav_00_04, BACI_Grav_00_04$Vo
 BACI_Grav_00_04$Trade_to_GDP_ratio_d <- with(BACI_Grav_00_04, BACI_Grav_00_04$VoT/BACI_Grav_00_04$gdp_wdi_const_d)
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_00_04<-BACI_Grav_00_04%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+BACI_Grav_00_04<-BACI_Grav_00_04%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT,na.rm=TRUE))
+view(round(BACI_Grav_00_04$VoT_Proportion,2))  
+
 
 write.csv(BACI_Grav_00_04, file = "../Output/Combined/BACI_Grav_00_04.csv")
 
@@ -63,6 +70,7 @@ BACI_Grav_05_09$Trade_to_GDP_ratio_d <- with(BACI_Grav_05_09, BACI_Grav_05_09$Vo
 
 #Trade value proportion per total of trade value for exporter ##
 BACI_Grav_05_09<-BACI_Grav_05_09%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+print(round(BACI_Grav_05_09$VoT_Proportion,2))  
 
 write.csv(BACI_Grav_05_09, file = "../Output/Combined/BACI_Grav_05_09.csv")
 
@@ -95,7 +103,7 @@ BACI_Grav_15_17$Trade_to_GDP_ratio_o <- with(BACI_Grav_15_17, BACI_Grav_15_17$Vo
 BACI_Grav_15_17$Trade_to_GDP_ratio_d <- with(BACI_Grav_15_17, BACI_Grav_15_17$VoT/BACI_Grav_15_17$gdp_wdi_const_d)
 
 #Trade value proportion per total of trade value for exporter ##
-BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+BACI_Grav_15_17<-BACI_Grav_15_17%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
 
 write.csv(BACI_Grav_15_17, file = "../Output/Combined/BACI_Grav_15_17.csv")
 
