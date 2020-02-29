@@ -45,85 +45,100 @@ unique(gravity2015_2017$year)
 #Agregating 1995 to 1999####
 detach(package:plyr)
 gravity1995_1999_agg<-gravity1995_1999%>%group_by(gravity1995_1999$iso3_o,gravity1995_1999$iso3_d)%>%
-  summarise(landlocked_o=ifelse(sum(landlocked_o) >= 1, 1, 0),landlocked_d=ifelse(sum(landlocked_d) >= 1, 1, 0),
-            island_o=ifelse(sum(island_o) >= 1, 1, 0), island_d=ifelse(sum(island_d) >= 1, 1, 0), 
-            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
-            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
+  summarise(landlocked_o=ifelse(sum(landlocked_o,na.rm=TRUE) >= 1, 1, 0),
+            landlocked_d=ifelse(sum(landlocked_d,na.rm=TRUE) >= 1, 1, 0),
+            island_o=ifelse(sum(island_o,na.rm=TRUE) >= 1, 1, 0), 
+            island_d=ifelse(sum(island_d,na.rm=TRUE) >= 1, 1, 0), 
+            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),
+            gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
             distance= mean(distance,na.rm=TRUE),pop_d=mean(pop_d,na.rm=TRUE), pop_o=mean(pop_o,na.rm=TRUE),
             contiguity=ifelse(sum(contiguity) >= 1, 1, 0), agree_pta_goods=ifelse(sum(agree_pta_goods) >= 1, 1, 0),
-            agree_pta_services=ifelse(sum(agree_pta_services) >= 1, 1, 0),
-            agree_cu=ifelse(sum(agree_cu) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia) >= 1, 1, 0),
-            agree_fta=ifelse(sum(agree_fta) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa) >= 1, 1, 0),
-            agree_pta=ifelse(sum(agree_pta) >= 1, 1, 0),polity_o=ifelse(sum(polity_o) >= 1, 1, 0),
-            polity_d=ifelse(sum(polity_d) >= 1, 1, 0), common_language=ifelse(sum(common_language) >= 1, 1, 0))
+            agree_pta_services=ifelse(sum(agree_pta_services,na.rm=TRUE) >= 1, 1, 0),
+            agree_cu=ifelse(sum(agree_cu,na.rm=TRUE) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia,na.rm=TRUE) >= 1, 1, 0),
+            agree_fta=ifelse(sum(agree_fta,na.rm=TRUE) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa,na.rm=TRUE) >= 1, 1, 0),
+            agree_pta=ifelse(sum(agree_pta,na.rm=TRUE) >= 1, 1, 0), common_language=ifelse(sum(common_language,na.rm=TRUE) >= 1, 1, 0))
 str(gravity1995_1999_agg)
 
 write.csv(gravity1995_1999_agg, file = "../Output/Gravity/gravity1995_1999_agg.csv") 
 
 #Agregating 2000 to 2004####
 gravity2000_2004_agg<-gravity2000_2004%>%group_by(gravity2000_2004$iso3_o,gravity2000_2004$iso3_d)%>%
-  summarise(landlocked_o=ifelse(sum(landlocked_o) >= 1, 1, 0),landlocked_d=ifelse(sum(landlocked_d) >= 1, 1, 0),
-            island_o=ifelse(sum(island_o) >= 1, 1, 0), island_d=ifelse(sum(island_d) >= 1, 1, 0), 
-            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
-            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
+  summarise(landlocked_o=ifelse(sum(landlocked_o,na.rm=TRUE) >= 1, 1, 0),
+            landlocked_d=ifelse(sum(landlocked_d,na.rm=TRUE) >= 1, 1, 0),
+            island_o=ifelse(sum(island_o,na.rm=TRUE) >= 1, 1, 0), 
+            island_d=ifelse(sum(island_d,na.rm=TRUE) >= 1, 1, 0), 
+            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),
+            gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
             distance= mean(distance,na.rm=TRUE),pop_d=mean(pop_d,na.rm=TRUE), pop_o=mean(pop_o,na.rm=TRUE),
             contiguity=ifelse(sum(contiguity) >= 1, 1, 0), agree_pta_goods=ifelse(sum(agree_pta_goods) >= 1, 1, 0),
-            agree_pta_services=ifelse(sum(agree_pta_services) >= 1, 1, 0),
-            agree_cu=ifelse(sum(agree_cu) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia) >= 1, 1, 0),
-            agree_fta=ifelse(sum(agree_fta) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa) >= 1, 1, 0),
-            agree_pta=ifelse(sum(agree_pta) >= 1, 1, 0),polity_o=ifelse(sum(polity_o) >= 1, 1, 0),
-            polity_d=ifelse(sum(polity_d) >= 1, 1, 0), common_language=ifelse(sum(common_language) >= 1, 1, 0))
+            agree_pta_services=ifelse(sum(agree_pta_services,na.rm=TRUE) >= 1, 1, 0),
+            agree_cu=ifelse(sum(agree_cu,na.rm=TRUE) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia,na.rm=TRUE) >= 1, 1, 0),
+            agree_fta=ifelse(sum(agree_fta,na.rm=TRUE) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa,na.rm=TRUE) >= 1, 1, 0),
+            agree_pta=ifelse(sum(agree_pta,na.rm=TRUE) >= 1, 1, 0), common_language=ifelse(sum(common_language,na.rm=TRUE) >= 1, 1, 0))
 str(gravity2000_2004_agg)
 
 write.csv(gravity2000_2004_agg, file = "../Output/Gravity/gravity2000_2004_agg.csv") 
 
 #Agregating 2005 to 2009####
 gravity2005_2009_agg<-gravity2005_2009%>%group_by(gravity2005_2009$iso3_o,gravity2005_2009$iso3_d)%>%
-  summarise(landlocked_o=ifelse(sum(landlocked_o) >= 1, 1, 0),landlocked_d=ifelse(sum(landlocked_d) >= 1, 1, 0),
-            island_o=ifelse(sum(island_o) >= 1, 1, 0), island_d=ifelse(sum(island_d) >= 1, 1, 0), 
-            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
-            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
+  summarise(landlocked_o=ifelse(sum(landlocked_o,na.rm=TRUE) >= 1, 1, 0),
+            landlocked_d=ifelse(sum(landlocked_d,na.rm=TRUE) >= 1, 1, 0),
+            island_o=ifelse(sum(island_o,na.rm=TRUE) >= 1, 1, 0), 
+            island_d=ifelse(sum(island_d,na.rm=TRUE) >= 1, 1, 0), 
+            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),
+            gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
             distance= mean(distance,na.rm=TRUE),pop_d=mean(pop_d,na.rm=TRUE), pop_o=mean(pop_o,na.rm=TRUE),
             contiguity=ifelse(sum(contiguity) >= 1, 1, 0), agree_pta_goods=ifelse(sum(agree_pta_goods) >= 1, 1, 0),
-            agree_pta_services=ifelse(sum(agree_pta_services) >= 1, 1, 0),
-            agree_cu=ifelse(sum(agree_cu) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia) >= 1, 1, 0),
-            agree_fta=ifelse(sum(agree_fta) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa) >= 1, 1, 0),
-            agree_pta=ifelse(sum(agree_pta) >= 1, 1, 0),polity_o=ifelse(sum(polity_o) >= 1, 1, 0),
-            polity_d=ifelse(sum(polity_d) >= 1, 1, 0), common_language=ifelse(sum(common_language) >= 1, 1, 0))
+            agree_pta_services=ifelse(sum(agree_pta_services,na.rm=TRUE) >= 1, 1, 0),
+            agree_cu=ifelse(sum(agree_cu,na.rm=TRUE) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia,na.rm=TRUE) >= 1, 1, 0),
+            agree_fta=ifelse(sum(agree_fta,na.rm=TRUE) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa,na.rm=TRUE) >= 1, 1, 0),
+            agree_pta=ifelse(sum(agree_pta,na.rm=TRUE) >= 1, 1, 0), common_language=ifelse(sum(common_language,na.rm=TRUE) >= 1, 1, 0))
 str(gravity2005_2009_agg)
 
 write.csv(gravity2005_2009_agg, file = "../Output/Gravity/gravity2005_2009_agg.csv") 
 
 #Agregating 2010 to 2014####
 gravity2010_2014_agg<-gravity2010_2014%>%group_by(gravity2010_2014$iso3_o,gravity2010_2014$iso3_d)%>%
-  summarise(landlocked_o=ifelse(sum(landlocked_o) >= 1, 1, 0),landlocked_d=ifelse(sum(landlocked_d) >= 1, 1, 0),
-            island_o=ifelse(sum(island_o) >= 1, 1, 0), island_d=ifelse(sum(island_d) >= 1, 1, 0), 
-            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
-            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
+  summarise(landlocked_o=ifelse(sum(landlocked_o,na.rm=TRUE) >= 1, 1, 0),
+            landlocked_d=ifelse(sum(landlocked_d,na.rm=TRUE) >= 1, 1, 0),
+            island_o=ifelse(sum(island_o,na.rm=TRUE) >= 1, 1, 0), 
+            island_d=ifelse(sum(island_d,na.rm=TRUE) >= 1, 1, 0), 
+            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),
+            gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
             distance= mean(distance,na.rm=TRUE),pop_d=mean(pop_d,na.rm=TRUE), pop_o=mean(pop_o,na.rm=TRUE),
             contiguity=ifelse(sum(contiguity) >= 1, 1, 0), agree_pta_goods=ifelse(sum(agree_pta_goods) >= 1, 1, 0),
-            agree_pta_services=ifelse(sum(agree_pta_services) >= 1, 1, 0),
-            agree_cu=ifelse(sum(agree_cu) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia) >= 1, 1, 0),
-            agree_fta=ifelse(sum(agree_fta) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa) >= 1, 1, 0),
-            agree_pta=ifelse(sum(agree_pta) >= 1, 1, 0),polity_o=ifelse(sum(polity_o) >= 1, 1, 0),
-            polity_d=ifelse(sum(polity_d) >= 1, 1, 0), common_language=ifelse(sum(common_language) >= 1, 1, 0))
+            agree_pta_services=ifelse(sum(agree_pta_services,na.rm=TRUE) >= 1, 1, 0),
+            agree_cu=ifelse(sum(agree_cu,na.rm=TRUE) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia,na.rm=TRUE) >= 1, 1, 0),
+            agree_fta=ifelse(sum(agree_fta,na.rm=TRUE) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa,na.rm=TRUE) >= 1, 1, 0),
+            agree_pta=ifelse(sum(agree_pta,na.rm=TRUE) >= 1, 1, 0), common_language=ifelse(sum(common_language,na.rm=TRUE) >= 1, 1, 0))
 str(gravity2010_2014_agg)
 
 write.csv(gravity2010_2014_agg, file = "../Output/Gravity/gravity2010_2014_agg.csv") 
 
 #Agregating 2015 to 2017####
 gravity2015_2017_agg<-gravity2015_2017%>%group_by(gravity2015_2017$iso3_o,gravity2015_2017$iso3_d)%>%
-  summarise(landlocked_o=ifelse(sum(landlocked_o) >= 1, 1, 0),landlocked_d=ifelse(sum(landlocked_d) >= 1, 1, 0),
-            island_o=ifelse(sum(island_o) >= 1, 1, 0), island_d=ifelse(sum(island_d) >= 1, 1, 0), 
-            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
-            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
+  summarise(landlocked_o=ifelse(sum(landlocked_o,na.rm=TRUE) >= 1, 1, 0),
+            landlocked_d=ifelse(sum(landlocked_d,na.rm=TRUE) >= 1, 1, 0),
+            island_o=ifelse(sum(island_o,na.rm=TRUE) >= 1, 1, 0), 
+            island_d=ifelse(sum(island_d,na.rm=TRUE) >= 1, 1, 0), 
+            gdp_wdi_const_d=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_const_o=mean(gdp_wdi_const_d,na.rm=TRUE),
+            gdp_wdi_cap_const_o=mean(gdp_wdi_cap_const_o,na.rm=TRUE),
+            gdp_wdi_cap_const_d=mean(gdp_wdi_cap_const_d,na.rm=TRUE),
             distance= mean(distance,na.rm=TRUE),pop_d=mean(pop_d,na.rm=TRUE), pop_o=mean(pop_o,na.rm=TRUE),
             contiguity=ifelse(sum(contiguity) >= 1, 1, 0), agree_pta_goods=ifelse(sum(agree_pta_goods) >= 1, 1, 0),
-            agree_pta_services=ifelse(sum(agree_pta_services) >= 1, 1, 0),
-            agree_cu=ifelse(sum(agree_cu) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia) >= 1, 1, 0),
-            agree_fta=ifelse(sum(agree_fta) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa) >= 1, 1, 0),
-            agree_pta=ifelse(sum(agree_pta) >= 1, 1, 0),polity_o=ifelse(sum(polity_o) >= 1, 1, 0),
-            polity_d=ifelse(sum(polity_d) >= 1, 1, 0), common_language=ifelse(sum(common_language) >= 1, 1, 0))
+            agree_pta_services=ifelse(sum(agree_pta_services,na.rm=TRUE) >= 1, 1, 0),
+            agree_cu=ifelse(sum(agree_cu,na.rm=TRUE) >= 1, 1, 0),agree_eia=ifelse(sum(agree_eia,na.rm=TRUE) >= 1, 1, 0),
+            agree_fta=ifelse(sum(agree_fta,na.rm=TRUE) >= 1, 1, 0),agree_psa=ifelse(sum(agree_psa,na.rm=TRUE) >= 1, 1, 0),
+            agree_pta=ifelse(sum(agree_pta,na.rm=TRUE) >= 1, 1, 0), common_language=ifelse(sum(common_language,na.rm=TRUE) >= 1, 1, 0))
 str(gravity2015_2017_agg)
 
 write.csv(gravity2015_2017_agg, file = "../Output/Gravity/gravity2015_2017_agg.csv") 

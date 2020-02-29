@@ -32,7 +32,7 @@ BACI_Grav_95_99$X.y<- NULL
 BACI_Grav_95_99<-BACI_Grav_95_99%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
 
 
-BACI_Grav_95_99<-BACI_Grav_95_99%>% mutate(VoT= round(VoT/1000000,2))  #Change VoT from in thousands to in billions
+BACI_Grav_95_99<-BACI_Grav_95_99%>% mutate(VoT= round(VoT/1000,2))  #Change VoT from in thousands to in millions
 
 
 
@@ -50,7 +50,7 @@ BACI_Grav_00_04$X.y<- NULL
 BACI_Grav_00_04<-BACI_Grav_00_04%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
 head(BACI_Grav_00_04$VoT_Proportion)
 
-BACI_Grav_00_04<-BACI_Grav_00_04%>% mutate(VoT= round(VoT/1000000,2))  #Change VoT from in thousands to in billions
+BACI_Grav_00_04<-BACI_Grav_00_04%>% mutate(VoT= round(VoT/1000,2))  #Change VoT from in thousands to in millions
 
 
 write.csv(BACI_Grav_00_04, file = "../Output/Combined/BACI_Grav_00_04.csv")
@@ -66,7 +66,7 @@ BACI_Grav_05_09$X.y<- NULL
 BACI_Grav_05_09<-BACI_Grav_05_09%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
 head(BACI_Grav_05_09$VoT_Proportion)  
 
-BACI_Grav_05_09<-BACI_Grav_05_09%>% mutate(VoT= round(VoT/1000000,2))  #Change VoT from in thousands to in billions
+BACI_Grav_05_09<-BACI_Grav_05_09%>% mutate(VoT= round(VoT/1000,2))  #Change VoT from in thousands to in millions
 
 
 write.csv(BACI_Grav_05_09, file = "../Output/Combined/BACI_Grav_05_09.csv")
@@ -84,7 +84,7 @@ BACI_Grav_10_14$X.y<- NULL
 BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
 head(BACI_Grav_10_14$VoT_Proportion)
 
-BACI_Grav_10_14<-BACI_Grav_10_14%>% mutate(VoT= round(VoT/1000000,2))  #Change VoT from in thousands to in billions
+BACI_Grav_10_14<-BACI_Grav_10_14%>% mutate(VoT= round(VoT/1000,2))  #Change VoT from in thousands to in millions
 
 
 write.csv(BACI_Grav_10_14, file = "../Output/Combined/BACI_Grav_10_14.csv")
@@ -101,7 +101,7 @@ BACI_Grav_15_17$X.y<- NULL
 BACI_Grav_15_17<-BACI_Grav_15_17%>%group_by(Exporter) %>% mutate(VoT_Proportion = round(VoT/sum(VoT)*100,2))
 head(BACI_Grav_15_17$VoT_Proportion)
 
-BACI_Grav_15_17<-BACI_Grav_15_17%>% mutate(VoT= round(VoT/1000000,2))  #Change VoT from in thousands to in billions
+BACI_Grav_15_17<-BACI_Grav_15_17%>% mutate(VoT= round(VoT/1000,2))  #Change VoT from in thousands to in millions
 
 
 write.csv(BACI_Grav_15_17, file = "../Output/Combined/BACI_Grav_15_17.csv")
