@@ -31,9 +31,7 @@ BACI_Grav_95_99$Trade_to_GDP_ratio_o <- with(BACI_Grav_95_99, BACI_Grav_95_99$Vo
 BACI_Grav_95_99$Trade_to_GDP_ratio_d <- with(BACI_Grav_95_99, BACI_Grav_95_99$VoT/BACI_Grav_95_99$gdp_wdi_const_d)
 
 #Trade value proportion per total of trade value for exporter ##
-
 BACI_Grav_95_99<-BACI_Grav_95_99%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
-
 
 write.csv(BACI_Grav_95_99, file = "../Output/Combined/BACI_Grav_95_99.csv")
 
@@ -81,6 +79,7 @@ BACI_Grav_10_14$Trade_to_GDP_ratio_d <- with(BACI_Grav_10_14, BACI_Grav_10_14$Vo
 
 #Trade value proportion per total of trade value for exporter ##
 BACI_Grav_10_14<-BACI_Grav_10_14%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+
 
 write.csv(BACI_Grav_10_14, file = "../Output/Combined/BACI_Grav_10_14.csv")
 
