@@ -332,7 +332,7 @@ head(BACI1995_agg)
 str(BACI1995_agg)
 
 
-release1993_2004 <- read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
+release1993_2004 <- read.csv("https://www.usitc.gov/documents/gravity/release_1.0_1993_2004.csv")
 release1993_2004_list<-split(release1993_2004,release1993_2004$year)
 release1995<-release1993_2004_list$`1995`
 
@@ -350,16 +350,13 @@ BACI1995_agg<-merge(BACI1995_agg,
                     by.x=c("Importer","Exporter"), by.y=c("iso3_o","iso3_d"))
 head(BACI1995_agg)
 
+#Trade value proportion per total of trade value for exporter ##
+BACI1995_agg<-BACI1995_agg%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+
 BACI1995_agg<-BACI1995_agg %>% mutate_if(is.factor, as.character)
 write.csv(BACI1995_agg, file = "../Output/BACI/BACI1995_agg.csv") 
 
 
-
-# Decode Country.Code for Importer and Exporter###
-country_code <- read.csv("../Input/country_codes_BACI.csv",sep = ";")
-product_category <- read.csv("../Input/hs92_6d.csv",sep = ";")
-head(country_code)
-head(product_category)
 
 
 
@@ -377,61 +374,63 @@ names(BACI2016)[names(BACI2016)=="v"] <- "VoT"
 names(BACI2016)[names(BACI2016)=="q"] <- "Quantity"
 
 # Update Datatype###
-str(BACI1995)
-BACI1995$Year <- as.factor(BACI1995$Year)
-BACI1995$`Product Category` <- as.factor(BACI1995$`Product Category`)
-BACI1995$Exporter <- as.character(BACI1995$Exporter)
-BACI1995$Importer <- as.character(BACI1995$Importer)
-BACI1995$VoT <- as.numeric(BACI1995$VoT)
-BACI1995$Quantity <- as.numeric(BACI1995$Quantity)
+str(BACI2016)
+BACI2016$Year <- as.factor(BACI2016$Year)
+BACI2016$`Product Category` <- as.factor(BACI2016$`Product Category`)
+BACI2016$Exporter <- as.character(BACI2016$Exporter)
+BACI2016$Importer <- as.character(BACI2016$Importer)
+BACI2016$VoT <- as.numeric(BACI2016$VoT)
+BACI2016$Quantity <- as.numeric(BACI2016$Quantity)
+
 
 # Decode Country.Code for Importer and Exporter###
 
-BACI1995<-merge(BACI1995, country_code[,names(country_code) %in% c("Country.Code", "ISO3.digit.Alpha")], by.x="Importer", by.y="Country.Code")
-BACI1995$Importer<-BACI1995$ISO3.digit.Alpha
-BACI1995$ISO3.digit.Alpha<-NULL
+BACI2016<-merge(BACI2016, country_code[,names(country_code) %in% c("Country.Code", "ISO3.digit.Alpha")], by.x="Importer", by.y="Country.Code")
+BACI2016$Importer<-BACI2016$ISO3.digit.Alpha
+BACI2016$ISO3.digit.Alpha<-NULL
 
-BACI1995<-merge(BACI1995, country_code[,names(country_code) %in% c("Country.Code", "ISO3.digit.Alpha")], by.x="Exporter", by.y="Country.Code")
-BACI1995$Exporter<-BACI1995$ISO3.digit.Alpha
-BACI1995$ISO3.digit.Alpha<-NULL
-head(BACI1995)
-str(BACI1995)
+BACI2016<-merge(BACI2016, country_code[,names(country_code) %in% c("Country.Code", "ISO3.digit.Alpha")], by.x="Exporter", by.y="Country.Code")
+BACI2016$Exporter<-BACI2016$ISO3.digit.Alpha
+BACI2016$ISO3.digit.Alpha<-NULL
+head(BACI2016)
+str(BACI2016)
 
 # Disaggregating the Product Category###
 detach(package:plyr)
-BACI1995_agg<-BACI1995%>%group_by(Year,Exporter,Importer)%>%summarise(VoT=sum(VoT),Quantity=sum(Quantity))
-head(BACI1995_agg)
-str(BACI1995_agg)
+BACI2016_agg<-BACI2016%>%group_by(Year,Exporter,Importer)%>%summarise(VoT=sum(VoT),Quantity=sum(Quantity))
+head(BACI2016_agg)
+str(BACI2016_agg)
 
 
-release1993_2004 <- read.csv("C:/Users/sandr/Desktop/SNA/Social-Network-Analysis-NAFTA/release_1.0_1993_2004.csv")
-release1993_2004_list<-split(release1993_2004,release1993_2004$year)
-release1995<-release1993_2004_list$`1995`
 
-colnames(release1995)
-head(release1995$iso3_o)
+
+
+
+release2005_2016 <- read.csv("https://www.usitc.gov/documents/gravity/release_1.0_2005_2016.csv")
+release2005_2016_list<-split(release2005_2016,release2005_2016$year)
+release2016<-release1993_2004_list$`2016`
+
+colnames(release2016)
+head(release2016$iso3_o)
 
 # Add Attributes from Gravity dataset ###
-BACI1995_agg<-merge(BACI1995_agg, 
-                    release1995[,names(release1995) %in% c("iso3_o", "region_o","gdp_wdi_cur_o",
+BACI2016_agg<-merge(BACI2016_agg, 
+                    release2016[,names(release2016) %in% c("iso3_o", "region_o","gdp_wdi_cur_o",
                                                            "landlocked_o","island_o", "pop_o",
                                                            "iso3_d", "region_d","gdp_wdi_const_d","gdp_wdi_const_o","gdp_wdi_cap_const_o","gdp_wdi_cap_const_o",
                                                            "landlocked_d","island_d", "pop_d",
                                                            "contiguity", "agree_pta_goods","agree_pta_services",
                                                            "agree_cu","agree_eia","agree_fta","agree_psa","agree_pta","polity_o","polity_d")], 
                     by.x=c("Importer","Exporter"), by.y=c("iso3_o","iso3_d"))
-head(BACI1995_agg)
+head(BACI2016_agg)
 
-BACI1995_agg<-BACI1995_agg %>% mutate_if(is.factor, as.character)
-write.csv(BACI1995_agg, file = "../Output/BACI/BACI1995_agg.csv") 
+#Trade value proportion per total of trade value for exporter ##
+BACI2016_agg<-BACI2016_agg%>%group_by(Exporter) %>% mutate(VoT_Proportion = VoT/sum(VoT))
+
+BACI2016_agg<-BACI2016_agg %>% mutate_if(is.factor, as.character)
+write.csv(BACI2016_agg, file = "../Output/BACI/BACI2016_agg.csv") 
 
 
-
-# Decode Country.Code for Importer and Exporter###
-country_code <- read.csv("../Input/country_codes_BACI.csv",sep = ";")
-product_category <- read.csv("../Input/hs92_6d.csv",sep = ";")
-head(country_code)
-head(product_category)
 
 
 
