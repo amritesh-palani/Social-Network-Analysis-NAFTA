@@ -1,16 +1,27 @@
 library(plyr)
-install.packages("sand") 
-library(sand)
-install_sand_packages()
-
 packages <- c("igraph","visNetwork","dplyr","ggplot")
 install.packages(packages)
-install.packages("igraph")
 
 library(igraph)
+require(igraph)
 library(tidyverse)
 library(haven)
-require(igraph)
+install.packages("tibble")
+library("tibble")
+
+install.packages("network")
+library(network)
+library(sna)
+
+install.packages("sand") 
+install_sand_packages()
+library(sand)
+
+install.packages("BiocManager")
+BiocManager::install("Rgraphviz")
+library(Rgraphviz)
+install.packages("visNetwork")
+library(visNetwork)
 
 #Reading Data
 
@@ -21,14 +32,16 @@ colnames(BACI1995)
 head(BACI1995)
 summary(BACI1995)
 
-#Visulaizaing the Global trade network. 
+#Visulaizing the Global trade network. 
+
 edge_list <- tibble(from = BACI1995$Importer, to = BACI1995$Exporter)
-node_list <- tibble(id = (BACI1995$Exporter))
+node_list <- tibble(id = unique(BACI1995$Importer))
 g<-graph.data.frame(edge_list, directed = T)
 g
 E(g)
 V(g)
 plot(g)
+
 #Edges needs to be weigthed by edge attribute (Vo) and filtered
 #Plotting weighted graph based on value of trade
 E(g)$weight<-BACI1995$VoT
@@ -36,6 +49,7 @@ V(g)
 plot(g)
 #Simplified
 plot(simplify(g))
+
 
 #only map canada, mexico and  United States based on VoT 
 E(g)[from("USA")]
@@ -61,7 +75,7 @@ g
 plot(g)
 plot(make_ego_graph(g,3,"USA")[[1]])
 
-##Isolate Trade of USA in 1995
+##Isolate Trade of MEX in 1995
 edge_list <- tibble(from =BACI1995$Exporter, to =BACI1995$Importer)
 node_list <- tibble(id = (BACI1995$Exporter))
 g<-graph.data.frame(edge_list,directed = T)
@@ -105,16 +119,48 @@ V(agr_g)
 plot(agr_g)
 plot(simplify(agr_g))ol
 
-#Hypothesis 1: How are economic indicators (GDP, trade def,unemployement, etc) 
+#Hypothesis: How are economic indicators (GDP, trade def,unemployement, etc) 
 #related to network metrics (closeness, centrality, strength) ?
 
-#Calculating Vertex degree of International trade 1995. 
+#Centrality measures.
+
+BACI1995<-read.csv("BACI1995_agg.csv",sep = ",")
+edge_list <- tibble(from = BACI1995$Importer, to = BACI1995$Exporter)
+node_list <- tibble(id = unique(BACI1995$Importer))
+g<-graph.data.frame(edge_list, directed = T)
+E(g)$weight<-BACI1995$VoT
+#Degree Centrality
+DC<- centr_degree(g, mode = "all")
+DC$res
+BACI1995<-merge(BACI1995,DC)
+#Eigen Vector centrality. 
+EVC<-as.data.frame(eigen_centrality(g))
+EVC<-EVC$vector
+BACI1995<-merge(BACI1995,EVC)
+head(BACI1995)
+#Betweenness Centrality. 
+#Betweenness centrality measures are aimed at summarizing the extent to 
+#which a vertex is located ‘between’ other pairs of vertices.
+g1<- get.adjacency(g,sparse=FALSE)
+BC<- closeness(g1,gmode="digraph", diag=FALSE, 
+               tmaxdev=FALSE, cmode="directed", geodist.precomp=NULL, 
+               rescale=FALSE, ignore.eval=TRUE)
+BC<- as.data.frame(BC)
+#Closeness centrality
+#Closeness centrality measures attempt to capture the notion that a vertex is ‘cen- tral’ if it 
+#is ‘close’ to many other vertices. 
+CC<- closeness(g1,g=100, gmode="digraph", diag=FALSE, 
+               tmaxdev=FALSE, cmode="directed", geodist.precomp=NULL, 
+               rescale=FALSE, ignore.eval=TRUE)
+CC
+CC<- as.data.frame(CC)
+
+#Calculating Vertex and edge characteristics. 
 #Degree dv of a vertex v, in a network graph G = (V,E),counts the number of edges in E incident upon v.  
 #The collection { fd }d≥0 is called the degree distribution of G, 
 #and is simply a rescaling of the set of degree frequencies, formed from the original degree sequence
-install.packages("network")
-library(network)
-library(sna)
+
+library(sand)
 
 edge_list <- tibble(from = BACI1995$Importer, to = BACI1995$Exporter)
 node_list <- tibble(id = (BACI1995$Exporter))
@@ -130,7 +176,7 @@ hist(degree(g))
 hist(degree(g),col="lightblue",
      xlab="Vertex Degree",ylab="Frequency",main="")   
 
-#Calculating Vertex strength of International trade.
+#Calculating Vertex Strength.
 
 hist(graph.strength(g), col="pink",
      xlab="Vertex Strength", ylab="Frequency", main="")
@@ -154,23 +200,7 @@ plot(d.g, a.nn.deg.g, log="xy",col="goldenrod",
      xlab=c("Log Vertex Degree"), 
      ylab=c("Log Average Neighbor Degree"))
 
-#Centrality measures.
-
-A <- get.adjacency(g, sparse=FALSE)
-
-g <- network::as.network.matrix(A)
-sna::gplot.target(g, degree(g), main="Degree", 
-                  circ.lab = FALSE, circ.col="skyblue",
-                  usearrows = FALSE,
-                  vertex.col=c("blue", rep("red", 32), "yellow"), 
-                  edge.col="darkgray")
-
-l <- layout.kamada.kawai(g)
-plot(g, layout=l, main="Importer", vertex.label="",
-     vertex.size=10 * sqrt(hub.score(BACI1995$VoT)))
-
 #Density and notions of Relative frequencies. 
-
 ego.instr <- induced.subgraph(g, neighborhood(g, 1, 1)[[1]])
 ego.admin <- induced.subgraph(g, neighborhood(g, 1, 34)[[1]])
 graph.density(g)
@@ -186,40 +216,54 @@ transitivity(g)
 transitivity(g, "local", vids=c(1,34))
 
 #Connectivity, cuts and flows.
-
 is.connected(g)
-comps <- decompose.graph(g) 
+comps <- decompose.graph(g)
 table(sapply(comps, vcount))
 g.gc <- decompose.graph(g)
-
-average.path.length(g.gc)
-diameter(g.gc)
-
 vertex.connectivity(g.gc)
 
+#Plots
+
+A <- get.adjacency(g, sparse=FALSE)
+library(network)
+g <- network::as.network.matrix(A)
+library(sna)
+#replace the argument degree(g) by the arguments closeness(g), 
+#betweenness(g), and evcent(g)$vector, respectively.
+sna::gplot.target(g, degree(g), main="Degree", 
+                  circ.lab = FALSE, circ.col="skyblue",
+                  usearrows = FALSE,
+                  vertex.col=c("blue", rep("red", 32), "yellow"), 
+                  edge.col="darkgray")
+#Plotting closeness centrality
+sna::gplot.target(g, closeness(g), main="Degree", 
+                  circ.lab = FALSE, circ.col="skyblue",
+                  usearrows = FALSE,
+                  vertex.col=c("blue", rep("red", 32), "yellow"), 
+                  edge.col="darkgray")
+#Plotting betweeness centrality
+sna::gplot.target(g, betweenness(g), main="Degree", 
+                  circ.lab = FALSE, circ.col="skyblue",
+                  usearrows = FALSE,
+                  vertex.col=c("blue", rep("red", 32), "yellow"), 
+                  edge.col="darkgray")
+#Plotting eigenvector centrality
+sna::gplot.target(g, evcent(g)$vector, main="Degree", 
+                  circ.lab = FALSE, circ.col="skyblue",
+                  usearrows = FALSE,
+                  vertex.col=c("blue", rep("red", 32), "yellow"), 
+                  edge.col="darkgray")
+#Visualizing hubs in the network. 
+l <- layout.kamada.kawai(g)
+plot(g, layout=l, main="Importer", vertex.label="",
+     vertex.size=10 * sqrt(hub.score(BACI1995$VoT)))
+
+# Different Centrality graphs to visulize
+library(CINNA)
+library(igraph)
+visualize_graph(g, centrality.type="Barycenter Centrality")
 
 #Visualizing the global tarde network. 
-
-setwd("~/Documents/MBD/Term 2/Social Network Analysis/Group thesis/Datasets/BACI_HS92")
-BACI1995<-read.csv("BACI1995_agg.csv",sep = ",")
-colnames(BACI1995)
-head(BACI1995)
-
-#Visulaizaing the Global trade network. 
-
-
-#check<-read.csv("routes_edges.csv")
-#nodesvalue<-read.csv("airport_nodes.csv")
-#edges <- data.frame(from = check$ï..source, to = check$destination,value=check$distance)
-#nodes<- data.frame(id= nodesvalue$airport, value=nodesvalue$value)
-
-install.packages("BiocManager")
-BiocManager::install("Rgraphviz")
-library(Rgraphviz)
-install.packages("visNetwork")
-library(visNetwork)
-
-
 getwd()
 setwd("~/Documents/MBD/Term 2/Social Network Analysis/Group thesis/Datasets/BACI_HS92")
 BACI1995<-read.csv("BACI1995_agg.csv",sep = ",")
@@ -238,13 +282,8 @@ graph_plot<-visNetwork(nodes, edges, background = "white" ,) %>%
         visPhysics(stabilization = TRUE)
 
 graph_plot
-
 visNetwork(nodes, edges, background = "white" ,)
-
 nodes_temp <- BACI1995[,c('Importer', 'VoT')]
-
 head(nodes_temp)
-
 class(nodes_temp$VoT)
-
 value <- aggregate(nodes_temp, by = list(nodes_temp$Importer), sum)
