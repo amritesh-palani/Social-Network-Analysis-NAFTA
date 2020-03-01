@@ -25,9 +25,11 @@ library(visNetwork)
 
 #Reading Data
 
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 getwd()
-setwd("~/Documents/MBD/Term 2/Social Network Analysis/Group thesis/Datasets/BACI_HS92")
-BACI1995<-read.csv("BACI1995_agg.csv",sep = ",")
+
+BACI1995<-read.csv("../Output/Combined/BACI1995_agg.csv",sep = ",")
 colnames(BACI1995)
 head(BACI1995)
 summary(BACI1995)
@@ -124,7 +126,7 @@ plot(simplify(agr_g))ol
 
 #Centrality measures.
 
-BACI1995<-read.csv("BACI1995_agg.csv",sep = ",")
+BACI1995<-read.csv("../Output/Combined/BACI1995_agg.csv",sep = ",")
 edge_list <- tibble(from = BACI1995$Importer, to = BACI1995$Exporter)
 node_list <- tibble(id = unique(BACI1995$Importer))
 g<-graph.data.frame(edge_list, directed = T)
