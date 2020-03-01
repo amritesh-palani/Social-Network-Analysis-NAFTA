@@ -149,12 +149,6 @@ BC<- betweenness(g1,gmode="digraph", diag=FALSE,
                rescale=FALSE, ignore.eval=TRUE)
 BC<- as.data.frame(BC)
 head(BC)
-
-BC<- closeness(g1,gmode="digraph", diag=FALSE, 
-               tmaxdev=FALSE, cmode="directed", geodist.precomp=NULL, 
-               rescale=FALSE, ignore.eval=TRUE)
-BC<- as.data.frame(BC)
-
 #Closeness centrality
 #Closeness centrality measures attempt to capture the notion that a vertex is ‘cen- tral’ if it 
 #is ‘close’ to many other vertices. 
