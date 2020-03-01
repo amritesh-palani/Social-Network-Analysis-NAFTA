@@ -142,11 +142,18 @@ head(BACI1995)
 #Betweenness centrality measures are aimed at summarizing the extent to 
 #which a vertex is located ‘between’ other pairs of vertices.
 g1<- get.adjacency(g,sparse=FALSE)
+
 BC<- betweenness(g1,gmode="digraph", diag=FALSE, 
                tmaxdev=FALSE, cmode="directed", geodist.precomp=NULL, 
                rescale=FALSE, ignore.eval=TRUE)
 BC<- as.data.frame(BC)
 head(BC)
+
+BC<- closeness(g1,gmode="digraph", diag=FALSE, 
+               tmaxdev=FALSE, cmode="directed", geodist.precomp=NULL, 
+               rescale=FALSE, ignore.eval=TRUE)
+BC<- as.data.frame(BC)
+
 #Closeness centrality
 #Closeness centrality measures attempt to capture the notion that a vertex is ‘cen- tral’ if it 
 #is ‘close’ to many other vertices. 
@@ -155,7 +162,9 @@ CC<- closeness(g1,g=100, gmode="digraph", diag=FALSE,
                rescale=FALSE, ignore.eval=TRUE)
 CC
 CC<- as.data.frame(CC)
+
 head(CC)
+
 #Calculating Vertex and edge characteristics. 
 #Degree dv of a vertex v, in a network graph G = (V,E),counts the number of edges in E incident upon v.  
 #The collection { fd }d≥0 is called the degree distribution of G, 
