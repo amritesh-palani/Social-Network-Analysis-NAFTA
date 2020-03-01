@@ -28,7 +28,7 @@ library(visNetwork)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 getwd()
 
-BACI1995<-read.csv("../Output/Combined/BACI1995_agg.csv",sep = ",")
+BACI1995<-read.csv("../Output/Combined/BACI_Grav_15_17.csv",sep = ",")
 colnames(BACI1995)
 head(BACI1995)
 summary(BACI1995)
@@ -36,7 +36,6 @@ summary(BACI1995)
 #Calculating Metrics for USA, CAN and MEX. 
 ##Centrality measures.
 
-BACI1995<-read.csv("../Output/Combined/BACI1995_agg.csv",sep = ",")
 edge_list <- tibble(from = BACI1995$Importer, to = BACI1995$Exporter)
 node_list <- tibble(id = unique(BACI1995$Importer))
 g<-graph.data.frame(edge_list, directed = T)
@@ -48,17 +47,17 @@ DC<- centr_degree(g, mode = "all")
 DC$res
 BACI1995<-merge(BACI1995,DC)
 a<- filter(BACI1995, BACI1995$Importer=="USA")
+a
 b<- filter(BACI1995, BACI1995$Importer=="CAN")
+b
 c<- filter(BACI1995, BACI1995$Importer=="MEX")
+c
 head(BACI1995)
+#BACI1995$xxx <- NULL
 ##Eigen Vector centrality. 
 EVC<-as.data.frame(eigen_centrality(g))
 EVC<-EVC$vector
-BACI1995<-merge(BACI1995,EVC)
-head(BACI1995)
-BACI1995<- filter(BACI1995, BACI1995$Importer=="CAN")
-head(BACI1995)
-#BACI1995$xxx <- NULL
+EVC<-as.data.frame(EVC)
 ##Betweenness Centrality. 
 ###Betweenness centrality measures are aimed at summarizing the extent to which a vertex is located ‘between’ other pairs of vertices.
 g1<- get.adjacency(g,sparse=FALSE)
@@ -76,19 +75,19 @@ CC<- closeness(g1,g=100, gmode="digraph", diag=FALSE,
 CC
 CC<- as.data.frame(CC)
 head(CC)
-BCCC<- cbind(BC,CC)
+BCCC<- cbind(BC,CC,EVC)
 
 for (i in seq_along(V(g))) {
-  if (V(g)[i] %in% c(V(g)["CAN"], V(g)["USA"], V(g)["MEX"])) {
+  if (V(g)[i] %in% c(V(g)["CAN"], V(g)["MEX"], V(g)["USA"])) {
     print(i)
   }
 }
-#USA-193
-#CAN-34
-#MEX-120
-BCCC<- BCCC[c(193,34,120),]
+#CAN-14
+#MEX-52
+#USA-80
+BCCC<- BCCC[c(10,44,79),]
 BCCC$Countries<-rownames(BCCC)
-
+BCCC
 #Density and notions of Relative frequencies. 
 graph.density(g)
 
