@@ -25,7 +25,6 @@ library(visNetwork)
 
 #Reading Data
 
-
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 getwd()
 
