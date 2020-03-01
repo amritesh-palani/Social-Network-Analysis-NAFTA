@@ -47,6 +47,9 @@ V(g)
 DC<- centr_degree(g, mode = "all")
 DC$res
 BACI1995<-merge(BACI1995,DC)
+a<- filter(BACI1995, BACI1995$Importer=="USA")
+b<- filter(BACI1995, BACI1995$Importer=="CAN")
+c<- filter(BACI1995, BACI1995$Importer=="MEX")
 head(BACI1995)
 ##Eigen Vector centrality. 
 EVC<-as.data.frame(eigen_centrality(g))
@@ -74,62 +77,20 @@ CC
 CC<- as.data.frame(CC)
 head(CC)
 BCCC<- cbind(BC,CC)
+
+for (i in seq_along(V(g))) {
+  if (V(g)[i] %in% c(V(g)["CAN"], V(g)["USA"], V(g)["MEX"])) {
+    print(i)
+  }
+}
 #USA-193
 #CAN-34
 #MEX-120
 BCCC<- BCCC[c(193,34,120),]
 BCCC$Countries<-rownames(BCCC)
 
-#Calculating Vertex and edge characteristics. 
-#Degree dv of a vertex v, in a network graph G = (V,E),counts the number of edges in E incident upon v.  
-#The collection { fd }d≥0 is called the degree distribution of G, 
-#and is simply a rescaling of the set of degree frequencies, formed from the original degree sequence
-
-library(sand)
-edge_list <- tibble(from = BACI1995$Importer, to = BACI1995$Exporter)
-node_list <- tibble(id = (BACI1995$Exporter))
-g<-graph.data.frame(edge_list, directed = T)
-g
-E(g)
-E(g)$weight<-BACI1995$VoT
-V(g)
-ecount(g)
-vcount(g)
-
-hist(degree(g))
-hist(degree(g),col="lightblue",
-     xlab="Vertex Degree",ylab="Frequency",main="")   
-
-#Calculating Vertex Strength.
-
-hist(graph.strength(g), col="pink",
-     xlab="Vertex Strength", ylab="Frequency", main="")
-
-#Calculating Vertex degree distribution of International trade in 1995. 
-d.g <- degree(g)
-hist(d.g,col="blue",
-     xlab="Degree", ylab="Frequency", 
-     main="Degree Distribution")
-
-#Calculating log. Vertex degree distribution of International trade in 1995.
-dd.g <- degree.distribution(g)
-d <- 1:max(d.g)-1
-ind <- (dd.g != 0)
-plot(d[ind], dd.g[ind], log="xy", col="blue",
-     xlab=c("Log-Degree"), ylab=c("Log-Intensity"), main="Log-Log Degree Distribution")
-
-#Calculating log. Vertex degree distribution of International trade in 1995.
-a.nn.deg.g <- graph.knn(g,V(g))$knn 
-plot(d.g, a.nn.deg.g, log="xy",col="goldenrod", 
-     xlab=c("Log Vertex Degree"), 
-     ylab=c("Log Average Neighbor Degree"))
-
 #Density and notions of Relative frequencies. 
-ego.instr <- induced.subgraph(g, neighborhood(g, 1, 1)[[1]])
-ego.admin <- induced.subgraph(g, neighborhood(g, 1, 34)[[1]])
 graph.density(g)
-graph.density(ego.instr) 
-graph.density(ego.admin)
 
 reciprocity(g, mode="default")
 reciprocity(g, mode="ratio")
@@ -138,11 +99,4 @@ assortativity.degree(g)
 
 transitivity(g)
 transitivity(g, "local", vids=c(1,34))
-
-#Connectivity, cuts and flows.
-is.connected(g)
-comps <- decompose.graph(g)
-table(sapply(comps, vcount))
-g.gc <- decompose.graph(g)
-vertex.connectivity(g.gc)
 
