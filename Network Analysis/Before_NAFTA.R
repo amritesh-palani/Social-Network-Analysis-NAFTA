@@ -177,8 +177,9 @@ V(g)
 ecount(g)
 vcount(g)
 
-hist(degree(g))
-hist(degree(g),col="lightblue",
+g1<- get.adjacency(g,sparse=FALSE)
+hist(degree(g1))
+hist(degree(g1),col="lightblue",
      xlab="Vertex Degree",ylab="Frequency",main="")   
 
 #Calculating Vertex Strength.
