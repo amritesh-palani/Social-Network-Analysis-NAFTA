@@ -8,7 +8,7 @@ country_code<-read.csv("../Input/country_codes_BACI.csv",sep = ";")
 
 
 ##########################1.  Loading 1995 to 1999 Files####
-setwd("../Input/BACI/BACI_HS92_1995-1999/")
+setwd("../../../BACI/BACI_HS92_1995-1999/")
 getwd()
 
 files95_99 = list.files(pattern="*.csv")
